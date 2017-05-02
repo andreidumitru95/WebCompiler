@@ -1,18 +1,14 @@
 package org.client;
 
-import com.google.gwt.event.dom.client.*;
-import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.server.rpc.core.java.util.Arrays;
-import org.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.*;
 import org.shared.LanguageStrings;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -52,11 +48,11 @@ public class WebCompiler implements EntryPoint {
         hp = new HorizontalPanel();
         cpp = new Button("C++");
         c = new Button("C");
-        c.setSize("50px","25px");
-        cpp.setSize("50px","25px");
-        optionsPanel=new HorizontalPanel();
+        c.setSize("50px", "25px");
+        cpp.setSize("50px", "25px");
+        optionsPanel = new HorizontalPanel();
         optionsPanel.setSize("150px", "40px");
-        optionsPanel.setCellWidth(cpp,"50px");
+        optionsPanel.setCellWidth(cpp, "50px");
 
         optionsPanel.add(cpp);
         optionsPanel.add(c);
@@ -88,7 +84,7 @@ public class WebCompiler implements EntryPoint {
         resultPanel.setSize("800px", "200px");
         resultArea = new TextArea();
         resultArea.setSize("750px", "180px");
-//        resultArea.setReadOnly(true);
+        resultArea.setReadOnly(true);
         resultArea.setEnabled(false);
         Label resultLabel = new Label("Result:   ");
         resultPanel.add(resultLabel);
@@ -126,17 +122,21 @@ public class WebCompiler implements EntryPoint {
         textCompile.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                greetingService.greetServer(sourceArea.getText(), new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        resultArea.setText("Failed to receive answer from server!");
-                    }
+                try {
+                    greetingService.compileSource(sourceArea.getText(), new AsyncCallback<String>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            resultArea.setText(caught.getMessage());
+                        }
 
-                    @Override
-                    public void onSuccess(String result) {
-                        resultArea.setText(result);
-                    }
-                });
+                        @Override
+                        public void onSuccess(String result) {
+                            resultArea.setText(result);
+                        }
+                    });
+                } catch (Exception e) {
+                    resultArea.setText(e.getMessage());
+                }
             }
         });
 
@@ -159,9 +159,9 @@ public class WebCompiler implements EntryPoint {
         sourceArea.addKeyUpHandler(new KeyUpHandler() {
             @Override
             public void onKeyUp(KeyUpEvent event) {
-                int key=event.getNativeKeyCode();
-                if(key==32|| key==13|| key==9){
-                   // event.preventDefault();  numai pt tasta tab
+                int key = event.getNativeKeyCode();
+                if (key == 32 || key == 13 || key == 9) {
+                    // event.preventDefault();  numai pt tasta tab
 
                 }
 
