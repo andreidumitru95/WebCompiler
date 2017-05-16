@@ -10,6 +10,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import org.shared.LanguageStrings;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
+import static java.lang.System.out;
+
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -30,6 +36,8 @@ public class WebCompiler implements EntryPoint {
 
     private Button cpp;
     private Button c;
+    private Button jv;
+    private Button save;
     private VerticalPanel vp;
     private HorizontalPanel hp;
     private Button fileCompile;
@@ -48,6 +56,9 @@ public class WebCompiler implements EntryPoint {
         hp = new HorizontalPanel();
         cpp = new Button("C++");
         c = new Button("C");
+        jv = new Button("Java");
+
+        jv.setSize("50px", "25px");
         c.setSize("50px", "25px");
         cpp.setSize("50px", "25px");
         optionsPanel = new HorizontalPanel();
@@ -56,13 +67,15 @@ public class WebCompiler implements EntryPoint {
 
         optionsPanel.add(cpp);
         optionsPanel.add(c);
-
+        optionsPanel.add(jv);
 
         sourcePanel = new HorizontalPanel();
         //sourcePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
         sourcePanel.setSize("800px", "600px");
+
         sourceArea = new TextArea();
         sourceArea.setSize("750px", "550px");
+        sourceArea.getElement().setId("source-text");
 //        sourceArea.setAlignment(ValueBoxBase.TextAlignment.CENTER);
         Label sourceLabel = new Label("Source:   ");
         sourcePanel.add(sourceLabel);
@@ -73,10 +86,12 @@ public class WebCompiler implements EntryPoint {
         bottonsPanel.setSize("800px", "40px");
         fileCompile = new Button("Compile selected file");
         textCompile = new Button("Compile source-code");
+        save= new Button("Save");
         fileUpload = new FileUpload();
         bottonsPanel.add(fileUpload);
         bottonsPanel.add(fileCompile);
         bottonsPanel.add(textCompile);
+        bottonsPanel.add(save);
         setHandlers();
 
 
@@ -155,6 +170,25 @@ public class WebCompiler implements EntryPoint {
 
             }
         });
+        jv.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                sourceArea.setText(LanguageStrings.java);
+
+            }
+        });
+//        save.addClickHandler(new ClickHandler() {
+//            @Override
+//            public void onClick(ClickEvent event) {
+//                try (PrintStream out = new PrintStream(new FileOutputStream("code.txt"))) {
+//                    out.print(sourceArea.getValue());
+//                }
+//               catch (FileNotFoundException e){
+//
+//               };
+//
+//            }
+//        });
 
         sourceArea.addKeyUpHandler(new KeyUpHandler() {
             @Override
