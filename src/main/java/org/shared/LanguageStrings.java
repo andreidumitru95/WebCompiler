@@ -7,7 +7,7 @@ import java.util.List;
  * Created by Costin on 5/2/2017.
  */
 public class LanguageStrings {
-    public static final String cpp = " #include <iostream.h>\n" +
+    public static final String CPP = " #include <iostream.h>\n" +
                                         "\n" +
                                         "main()\n" +
                                         "{\n" +
@@ -15,12 +15,19 @@ public class LanguageStrings {
                                         "    return 0;\n" +
                                         "}";
 
-    public static  final String c="#include<stdio.h>\n" +
+    public static  final String C="#include<stdio.h>\n" +
                                     "\n" +
                                     "main()\n" +
                                     "{\n" +
                                     "    printf(\"Hello World\");\n" +
                                     "}";
+
+    public static final String JAVA="public class HelloWorld {\n" +
+            "   public static void main(String[] args) {\n" +
+            "      // Prints \"Hello, World\" in the terminal window.\n" +
+            "      System.out.println(\"Hello, World\");\n" +
+            "   }\n" +
+            "}";
     List<String> cpp_key_word= new ArrayList<>(java.util.Arrays.asList(
         "alignas",
             "alignof",

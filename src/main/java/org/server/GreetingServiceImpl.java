@@ -4,9 +4,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.client.GreetingService;
 import org.shared.FieldVerifier;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,4 +96,93 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
         return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(
                 ">", "&gt;");
     }
+
+
+    public String javaCompiler(String input) {
+        String result = "";
+        String fileName = "testJava.java";
+        try {
+            PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+            writer.print(input);
+            writer.close();
+        } catch (IOException e) {
+            return e.getMessage();
+        }
+
+        String location = System.getProperty("user.dir");
+
+        String command = "java " + location + "\\" +fileName;
+
+        System.out.println("----" + command + "\n" + input);
+
+        ProcessBuilder pb = new ProcessBuilder(command);
+        pb.redirectOutput(Redirect.INHERIT);
+        pb.redirectError(Redirect.INHERIT);
+        try {
+            Process p = pb.start();
+            BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        try {
+//            Process p = Runtime.getRuntime().exec(command);
+//            return p.getOutputStream().
+//        } catch (IOException e) {
+//            return e.getMessage();
+//        }
+
+//        java.util.Scanner s = null;
+//        try {
+//            s = new java.util.Scanner(Runtime.getRuntime().exec(command).getInputStream()).useDelimiter("\\A");
+//        } catch (IOException e) {
+//            return e.getMessage();
+//        }
+//        return s.hasNext() ? s.next() : "";
+
+
+
+//        Runtime rt = Runtime.getRuntime();
+////        String[] commands = {"system.exe","-get t"};
+//        Process proc = null;
+//        try {
+//            proc = rt.exec(command);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        BufferedReader stdInput = new BufferedReader(new
+//                InputStreamReader(proc.getInputStream()));
+//
+//        BufferedReader stdError = new BufferedReader(new
+//                InputStreamReader(proc.getErrorStream()));
+//
+//// read the output from the command
+//        System.out.println("Here is the standard output of the command:\n");
+//        String s = null;
+//        try {
+//            while ((s = stdInput.readLine()) != null) {
+//                System.out.println(s);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//// read any errors from the attempted command
+//        System.out.println("Here is the standard error of the command (if any):\n");
+//        try {
+//            while ((s = stdError.readLine()) != null) {
+//                System.out.println(s);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        return "nu a mers";
+    }
+
 }

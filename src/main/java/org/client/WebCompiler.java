@@ -10,12 +10,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import org.shared.LanguageStrings;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
-import static java.lang.System.out;
-
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -86,7 +80,7 @@ public class WebCompiler implements EntryPoint {
         bottonsPanel.setSize("800px", "40px");
         fileCompile = new Button("Compile selected file");
         textCompile = new Button("Compile source-code");
-        save= new Button("Save");
+        save = new Button("Save");
         fileUpload = new FileUpload();
         bottonsPanel.add(fileUpload);
         bottonsPanel.add(fileCompile);
@@ -138,7 +132,7 @@ public class WebCompiler implements EntryPoint {
             @Override
             public void onClick(ClickEvent event) {
                 try {
-                    greetingService.compileSource(sourceArea.getText(), new AsyncCallback<String>() {
+                    greetingService.javaCompiler(sourceArea.getText(), new AsyncCallback<String>() {
                         @Override
                         public void onFailure(Throwable caught) {
                             resultArea.setText(caught.getMessage());
@@ -159,21 +153,21 @@ public class WebCompiler implements EntryPoint {
             @Override
             public void onClick(ClickEvent event) {
 
-                sourceArea.setText(LanguageStrings.cpp);
+                sourceArea.setText(LanguageStrings.CPP);
             }
         });
 
         c.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                sourceArea.setText(LanguageStrings.c);
+                sourceArea.setText(LanguageStrings.C);
 
             }
         });
         jv.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                sourceArea.setText(LanguageStrings.java);
+                sourceArea.setText(LanguageStrings.JAVA);
 
             }
         });
