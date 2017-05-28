@@ -34,7 +34,7 @@ public class WebCompiler implements EntryPoint {
     private Button save;
     private VerticalPanel vp;
     private HorizontalPanel hp;
-    private Button fileCompile;
+//    private Button fileCompile;
     private Button textCompile;
     private FileUpload fileUpload;
     TextArea resultArea;
@@ -43,6 +43,7 @@ public class WebCompiler implements EntryPoint {
     private HorizontalPanel optionsPanel;
     private HorizontalPanel sourcePanel;
     private TextArea sourceArea;
+    FileSubmit fileSubmit;
 
 
     public void onModuleLoad() {
@@ -75,15 +76,16 @@ public class WebCompiler implements EntryPoint {
         sourcePanel.add(sourceLabel);
         sourcePanel.add(sourceArea);
 
+        fileSubmit = new FileSubmit();
 
         bottonsPanel = new HorizontalPanel();
         bottonsPanel.setSize("800px", "40px");
-        fileCompile = new Button("Compile selected file");
+//        fileCompile = new Button("Compile selected file");
         textCompile = new Button("Compile source-code");
         save = new Button("Save");
         fileUpload = new FileUpload();
-        bottonsPanel.add(fileUpload);
-        bottonsPanel.add(fileCompile);
+        bottonsPanel.add(fileSubmit);
+//        bottonsPanel.add(fileCompile);
         bottonsPanel.add(textCompile);
         bottonsPanel.add(save);
         setHandlers();
@@ -103,30 +105,32 @@ public class WebCompiler implements EntryPoint {
 //        vp.add(resultPanel);
 
 //        vp.add(hp);
+
         RootPanel.get("optionsdiv").add(optionsPanel);
         RootPanel.get("buttonsPanel").add(bottonsPanel);
         RootPanel.get("sourcePanel").add(sourcePanel);
         RootPanel.get("resultPanel").add(resultPanel);
+
     }
 
     private void setHandlers() {
-        fileCompile.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                greetingService.greetServer(fileUpload.getName(), new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        resultArea.setText("Failed to receive answer from server!");
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        resultArea.setText(result);
-                    }
-                });
-
-            }
-        });
+//        fileCompile.addClickHandler(new ClickHandler() {
+//            @Override
+//            public void onClick(ClickEvent event) {
+//                greetingService.greetServer(fileUpload.getName(), new AsyncCallback<String>() {
+//                    @Override
+//                    public void onFailure(Throwable caught) {
+//                        resultArea.setText("Failed to receive answer from server!");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        resultArea.setText(result);
+//                    }
+//                });
+//
+//            }
+//        });
 
         textCompile.addClickHandler(new ClickHandler() {
             @Override
