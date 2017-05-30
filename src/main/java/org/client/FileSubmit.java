@@ -25,7 +25,7 @@ public class FileSubmit extends Composite{
         submit.setTitle("upload file");
 
         Panel uploadPanel = new FlowPanel();
-//        uploadPanel.setStyleName("FileSubmit");
+
         uploadPanel.add(file);
         uploadPanel.add(submit);
 
