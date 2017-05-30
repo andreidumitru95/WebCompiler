@@ -8,7 +8,14 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
+import org.apache.bcel.classfile.Code;
 import org.shared.LanguageStrings;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -18,6 +25,13 @@ public class WebCompiler implements EntryPoint {
      * The message displayed to the user when the server cannot be reached or
      * returns an error.
      */
+//
+//    public void doGet(HttpServletRequest request,
+//                      HttpServletResponse response)
+//            throws ServletException, IOException {
+//        PrintWriter out = response.getWriter();
+//        out.println("");
+//    }
     private static final String SERVER_ERROR = "An error occurred while "
             + "attempting to contact the server. Please check your network "
             + "connection and try again.";
@@ -31,6 +45,7 @@ public class WebCompiler implements EntryPoint {
     private Button cpp;
     private Button c;
     private Button jv;
+
     private Button save;
     private VerticalPanel vp;
     private HorizontalPanel hp;
@@ -59,6 +74,7 @@ public class WebCompiler implements EntryPoint {
         optionsPanel.setSize("150px", "40px");
         optionsPanel.setCellWidth(cpp, "50px");
 
+
         optionsPanel.add(cpp);
         optionsPanel.add(c);
         optionsPanel.add(jv);
@@ -74,6 +90,7 @@ public class WebCompiler implements EntryPoint {
         Label sourceLabel = new Label("Source:   ");
         sourcePanel.add(sourceLabel);
         sourcePanel.add(sourceArea);
+
 
 
         bottonsPanel = new HorizontalPanel();
