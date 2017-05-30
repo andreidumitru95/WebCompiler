@@ -8,14 +8,9 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
-import org.apache.bcel.classfile.Code;
 import org.shared.LanguageStrings;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -25,16 +20,6 @@ public class WebCompiler implements EntryPoint {
      * The message displayed to the user when the server cannot be reached or
      * returns an error.
      */
-//
-//    public void doGet(HttpServletRequest request,
-//                      HttpServletResponse response)
-//            throws ServletException, IOException {
-//        PrintWriter out = response.getWriter();
-//        out.println("");
-//    }
-    private static final String SERVER_ERROR = "An error occurred while "
-            + "attempting to contact the server. Please check your network "
-            + "connection and try again.";
 
     /**
      * Create a remote service proxy to talk to the server-side Greeting service.
@@ -80,13 +65,13 @@ public class WebCompiler implements EntryPoint {
         optionsPanel.add(jv);
 
         sourcePanel = new HorizontalPanel();
-        //sourcePanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+
         sourcePanel.setSize("800px", "600px");
 
         sourceArea = new TextArea();
         sourceArea.setSize("750px", "550px");
         sourceArea.getElement().setId("source-text");
-//        sourceArea.setAlignment(ValueBoxBase.TextAlignment.CENTER);
+
         Label sourceLabel = new Label("Source:   ");
         sourcePanel.add(sourceLabel);
         sourcePanel.add(sourceArea);
@@ -116,10 +101,7 @@ public class WebCompiler implements EntryPoint {
         resultPanel.add(resultLabel);
         resultPanel.add(resultArea);
 
-//        vp.add(sourcePanel);
-//        vp.add(resultPanel);
 
-//        vp.add(hp);
         RootPanel.get("optionsdiv").add(optionsPanel);
         RootPanel.get("buttonsPanel").add(bottonsPanel);
         RootPanel.get("sourcePanel").add(sourcePanel);
