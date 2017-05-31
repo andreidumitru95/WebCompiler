@@ -6,10 +6,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import org.shared.LanguageStrings;
-
 
 
 /**
@@ -25,6 +25,9 @@ public class WebCompiler implements EntryPoint {
      * Create a remote service proxy to talk to the server-side Greeting service.
      */
     private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+
+    boolean isJava = false;
+    boolean isCCpp = false;
 
 
     private Button cpp;
@@ -46,6 +49,7 @@ public class WebCompiler implements EntryPoint {
 
 
     public void onModuleLoad() {
+
         vp = new VerticalPanel();
         hp = new HorizontalPanel();
         cpp = new Button("C++");
@@ -77,7 +81,6 @@ public class WebCompiler implements EntryPoint {
         sourcePanel.add(sourceArea);
 
 
-
         bottonsPanel = new HorizontalPanel();
         bottonsPanel.setSize("800px", "40px");
         fileCompile = new Button("Compile selected file");
@@ -106,24 +109,39 @@ public class WebCompiler implements EntryPoint {
         RootPanel.get("buttonsPanel").add(bottonsPanel);
         RootPanel.get("sourcePanel").add(sourcePanel);
         RootPanel.get("resultPanel").add(resultPanel);
+        try {
+            greetingService.initDatabase(new AsyncCallback<Void>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    resultArea.setText("Database error");
+                }
+
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setHandlers() {
         fileCompile.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                greetingService.greetServer(fileUpload.getName(), new AsyncCallback<String>() {
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        resultArea.setText("Failed to receive answer from server!");
-                    }
-
-                    @Override
-                    public void onSuccess(String result) {
-                        resultArea.setText(result);
-                    }
-                });
-
+//                greetingService.greetServer(fileUpload.getName(), new AsyncCallback<String>() {
+//                    @Override
+//                    public void onFailure(Throwable caught) {
+//                        resultArea.setText("Failed to receive answer from server!");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        resultArea.setText(result);
+//                    }
+//                });
+                Window.alert("To be implemented");
             }
         });
 
@@ -131,17 +149,31 @@ public class WebCompiler implements EntryPoint {
             @Override
             public void onClick(ClickEvent event) {
                 try {
-                    greetingService.javaCompiler(sourceArea.getText(), new AsyncCallback<String>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            resultArea.setText(caught.getMessage());
-                        }
+                    if (isJava) {
+                        greetingService.javaCompiler(sourceArea.getText(), new AsyncCallback<String>() {
+                            @Override
+                            public void onFailure(Throwable caught) {
+                                resultArea.setText(caught.getMessage());
+                            }
 
-                        @Override
-                        public void onSuccess(String result) {
-                            resultArea.setText(result);
-                        }
-                    });
+                            @Override
+                            public void onSuccess(String result) {
+                                resultArea.setText(result);
+                            }
+                        });
+                    } else if (isCCpp) {
+                        greetingService.compileSource(sourceArea.getText(), new AsyncCallback<String>() {
+                            @Override
+                            public void onFailure(Throwable throwable) {
+                                resultArea.setText(throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(String s) {
+                                resultArea.setText(s);
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                     resultArea.setText(e.getMessage());
                 }
@@ -151,7 +183,8 @@ public class WebCompiler implements EntryPoint {
         cpp.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-
+                isCCpp = true;
+                isJava = false;
                 sourceArea.setText(LanguageStrings.CPP);
             }
         });
@@ -159,6 +192,8 @@ public class WebCompiler implements EntryPoint {
         c.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
+                isCCpp = true;
+                isJava = false;
                 sourceArea.setText(LanguageStrings.C);
 
             }
@@ -166,6 +201,8 @@ public class WebCompiler implements EntryPoint {
         jv.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
+                isCCpp = false;
+                isJava = true;
                 sourceArea.setText(LanguageStrings.JAVA);
 
             }

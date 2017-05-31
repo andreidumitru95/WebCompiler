@@ -17,7 +17,7 @@
             <property name="javax.persistence.jdbc.user" value="postgres" />
             <property name="javax.persistence.jdbc.password" value="postgres" />
             <property name="eclipselink.logging.level" value="ALL" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
             <property name="hibernate.archive.autodetection" value="false"/>
             <property name="hibernate.transaction.auto_close_session" value="false"/>
 

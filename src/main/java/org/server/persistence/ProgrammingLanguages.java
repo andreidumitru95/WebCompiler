@@ -1,6 +1,9 @@
 package org.server.persistence;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Andrei on 5/30/2017.
@@ -8,10 +11,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "programming_languages")
-public class ProgrammingLanguages {
+public class ProgrammingLanguages implements IsSerializable{
     private long id;
     private String name;
     private String helloWorldCode;
+
+    public ProgrammingLanguages() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

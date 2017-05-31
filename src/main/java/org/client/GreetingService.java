@@ -13,4 +13,6 @@ public interface GreetingService extends RemoteService {
     String compileSource(String input) throws Exception;
 
     String javaCompiler(String input) throws Exception;
+
+    void initDatabase() throws Exception;
 }

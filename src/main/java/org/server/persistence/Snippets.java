@@ -1,6 +1,9 @@
 package org.server.persistence;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "snippets")
-public class Snippets {
+public class Snippets implements IsSerializable {
     private long id;
     private long userId;
     private Date date;
@@ -17,6 +20,9 @@ public class Snippets {
     private String resultContent;
     private boolean errorFlag;
     private boolean languageId;
+
+    public Snippets() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

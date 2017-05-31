@@ -12,4 +12,6 @@ public interface GreetingServiceAsync {
     void compileSource(String input, AsyncCallback<String> callback) throws Exception;
 
     void javaCompiler(String input, AsyncCallback<String> callback) throws Exception;
+
+    void initDatabase(AsyncCallback<Void> async) throws Exception;
 }

@@ -1,19 +1,25 @@
 package org.server.persistence;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Andrei
  */
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements IsSerializable {
 
     private long id;
     private String username;
     private String firstName;
     private String lastName;
     private String email;
+
+    public Users() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
